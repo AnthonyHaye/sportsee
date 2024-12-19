@@ -1,12 +1,23 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid } from 'recharts';
-import PropTypes from 'prop-types';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  ResponsiveContainer,
+  CartesianGrid,
+} from "recharts";
+import PropTypes from "prop-types";
 
 function ActivityChart({ data }) {
   return (
-    <div style={{ width: '100%', height: 300 }}>
+    <div style={{ width: "100%", height: 300 }}>
       <h2>Activité Hebdomadaire</h2>
       <ResponsiveContainer>
-        <BarChart data={data} margin={{ top: 20, right: 30, left: 0, bottom: 10 }}>
+        <BarChart
+          data={data}
+          margin={{ top: 20, right: 30, left: 0, bottom: 10 }}
+        >
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="day" />
           <YAxis />

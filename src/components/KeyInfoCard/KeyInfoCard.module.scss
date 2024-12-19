@@ -1,0 +1,30 @@
+.card {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background-color: #fbfbfb;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+  .icon {
+    width: 60px;
+    height: 60px;
+  }
+
+  .content {
+    display: flex;
+    flex-direction: column;
+
+    .value {
+      font-size: 20px;
+      font-weight: bold;
+      color: #282d30;
+    }
+
+    .label {
+      font-size: 14px;
+      color: #74798c;
+    }
+  }
+}
