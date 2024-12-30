@@ -1,4 +1,25 @@
-/* Couleurs globales */
-$primary-color: #020203; // Couleur principale de la maquette
-$text-light: #fff; // Texte clair
-$text-dark: #333; // Texte sombre
+//fonts
+@import url(https://fonts.bunny.net/css?family=roboto:400,700,900);
+//400 normal
+//700 medium
+//900 bold
+$font-roboto : 'Roboto', sans-serif;
+
+//colors
+//red
+$color-primary : #ff0101;
+
+//black
+$color-bgnav : #020203;
+//light grey
+$color-bg-section : #FFFFFF;
+//dark grey
+$color-bg-section-dark : #282D30;
+//white
+$text-light : #ffffff;
+//black
+$text-dark : #000000;
+//grey
+$text-mid : #74798C;
+
+

@@ -1,49 +1,41 @@
-import {
-  Radar,
-  RadarChart,
-  PolarGrid,
-  PolarAngleAxis,
-  ResponsiveContainer,
-} from "recharts";
-import PropTypes from "prop-types";
-import styles from "./PerformanceChart.module.scss";
+import PropTypes from 'prop-types';
+import {  ResponsiveContainer, Radar, RadarChart, PolarGrid, PolarAngleAxis} from 'recharts';
+import "./PerformanceChart.scss"
 
 /**
- * PerformanceChart Component - Affiche un graphique radar de la performance.
- * @param {Object} props - Les propriétés du composant.
- * @param {Array} props.data - Les données du graphique radar.
- * @returns {JSX.Element} Le composant graphique radar.
+ * Un composant de graphique radar qui affiche les performances de l'utilisateur 
+ * sur différentes dimensions (cardio, énergie, endurance, force, vitesse, intensité).
+ *
+ * @param {Object} props - Les propriétés passées au composant.
+ * @param {Array<Object>} props.radarUserPerformance - Un tableau d'objets représentant les performances de l'utilisateur.
+ * @param {string} props.radarUserPerformance[].subject - Le type de performance (par exemple, 'cardio', 'énergie', etc.).
+ * @param {number} props.radarUserPerformance[].value - La valeur de performance pour le type correspondant.
+ *
+ * @returns {JSX.Element} Le composant de graphique radar rendu.
  */
-function PerformanceChart({ data }) {
+
+const PerformanceChart = ({radarUserPerformance}) => {
+   console.log("radar : ",radarUserPerformance)
   return (
-    <div className={styles.radarChart}>
-      <ResponsiveContainer width="100%" height={300}>
-        <RadarChart cx="50%" cy="50%" outerRadius="70%" data={data}>
-          <PolarGrid radialLines={false} />
-          <PolarAngleAxis
-            dataKey="subject"
-            stroke="white"
-            tick={{ fontSize: 12, fontWeight: 500 }}
-          />
-          <Radar
-            dataKey="value"
-            stroke="#FF0101"
-            fill="#FF0101"
-            fillOpacity={0.7}
-          />
-        </RadarChart>
-      </ResponsiveContainer>
-    </div>
-  );
+    <div className="user_radar_graph">
+    <ResponsiveContainer width="100%" height="200px">
+    <RadarChart cx="50%" cy="50%" outerRadius="90%" data={radarUserPerformance}>
+      <PolarGrid radialLines={false}/>
+      <PolarAngleAxis dataKey="subject" tick={{ fill: '#ffffff', fontSize: 10 }}/>
+      <Radar name="Mike" dataKey="value" fill="#ff0101b3"/>
+    </RadarChart>
+  </ResponsiveContainer>
+  </div>
+  )
 }
 
 PerformanceChart.propTypes = {
-  data: PropTypes.arrayOf(
-    PropTypes.shape({
-      subject: PropTypes.string.isRequired,
-      value: PropTypes.number.isRequired,
-    }),
-  ).isRequired,
-};
+  radarUserPerformance: PropTypes.arrayOf(
+      PropTypes.shape({
+        subject: PropTypes.string.isRequired,
+        value: PropTypes.number.isRequired,
+      })
+    ).isRequired,
+  };
 
-export default PerformanceChart;
+export default PerformanceChart
