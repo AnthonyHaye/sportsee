@@ -15,15 +15,17 @@ import "./PerformanceChart.scss"
  */
 
 const PerformanceChart = ({radarUserPerformance}) => {
-   console.log("radar : ",radarUserPerformance)
+  //  console.log("Données radarUserPerformance :",radarUserPerformance)
   return (
-    <div className="user_radar_graph">
-    <ResponsiveContainer width="100%" height="200px">
+    
+    <div className="user_radar_graph">      
+    <ResponsiveContainer width="100%" height="100%" >
     <RadarChart cx="50%" cy="50%" outerRadius="90%" data={radarUserPerformance}>
       <PolarGrid radialLines={false}/>
       <PolarAngleAxis dataKey="subject" tick={{ fill: '#ffffff', fontSize: 10 }}/>
       <Radar name="Mike" dataKey="value" fill="#ff0101b3"/>
     </RadarChart>
+    
   </ResponsiveContainer>
   </div>
   )

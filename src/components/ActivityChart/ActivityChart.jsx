@@ -18,10 +18,10 @@ import "./Activitychart.scss"
  * @returns {JSX.Element} Le composant de diagramme à barres rendu.
  */
 const Activitychart = ({ userActivitySessions }) => {
-  console.log("Données des sessions utilisateur :", userActivitySessions);
+  // console.log("Données des sessions utilisateur :", userActivitySessions);
   //calcul des limites pour l'axe Y (poids)
   const minWeight = Math.min(...userActivitySessions.map(session => session.kilogram))-1;
-  console.log("miniWeight :", minWeight)
+  // console.log("miniWeight :", minWeight)
   const maxWeight = minWeight + 7;
 
   //générer les valeurs des ticks pour l'axe Y des poids (un trait tous les kg)
@@ -49,7 +49,7 @@ const Activitychart = ({ userActivitySessions }) => {
       </div>
     </div>
     <div className='daily_activity_barchart'>
-    <ResponsiveContainer width="100%" height={150}>
+    <ResponsiveContainer width="100%" height="100%">
       <BarChart data={userActivitySessions}>
         <CartesianGrid strokeDasharray="1 1" horizontal={true} vertical={false} />
         <XAxis dataKey="day" tickFormatter={(value, index) => index + 1} />
@@ -70,7 +70,7 @@ const Activitychart = ({ userActivitySessions }) => {
               domain={[0, 600]}//échelle fixée des calories de 0 à 600
             />
         <Tooltip content={<CustomTooltip isSingleValue={false} />} />
-        <Bar dataKey="kilogram" yAxisId="weight" fill='#123456' barSize={32} radius={[10, 30, 50, 70]} />
+        <Bar dataKey="kilogram" yAxisId="weight" fill='#123456' barSize={8} radius={[10, 10, 0, 0]} />
         <Bar dataKey="calories" yAxisId="calories" fill='#FF0101' barSize={8} radius={[10, 10, 0, 0]} />
       </BarChart>
     </ResponsiveContainer>

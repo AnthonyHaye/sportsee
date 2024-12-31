@@ -1,0 +1,30 @@
+@use "../../styles/variables" as v;
+@use "../../styles/mixins" as m;
+
+.user-card-nutrition {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    width: 258px;
+    height: 124px;
+    @include m.container();
+    .icon_tab{
+        border-radius: 10px;
+        svg{
+          @include m.text(3rem, v.$color-primary);
+          margin: 1.5rem;
+        }
+    }
+  
+    .nutrition-info {
+      margin-left: 20px;
+      .nutrition-value {
+        @include m.text(20px, v.$text-dark);
+        font-weight: bold;
+      }
+      .nutrition-name {
+        @include m.text(14px);
+        margin-top: 1rem;
+      }
+    }
+  }

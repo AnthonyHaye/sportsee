@@ -1,5 +1,6 @@
 import PropTypes from "prop-types";
-import styles from "./KeyInfoCard.module.scss";
+import "./KeyInfoCard.scss";
+import IconSquare from "../IconSquare";
 
 /**
  * KeyInfoCard Component - Affiche une information clé avec une icône.
@@ -10,25 +11,25 @@ import styles from "./KeyInfoCard.module.scss";
  * @param {string} props.unit - Unité associée à la valeur.
  * @returns {JSX.Element} Carte affichant une information clé.
  */
-function KeyInfoCard({ icon, label, value, unit }) {
+function KeyInfoCard({ icon, iconColor, backgroundColor, name, value, unit }) {
+  const adapteValue = value.toLocaleString('fr-FR').replace(/\s/g, ',')
   return (
-    <div className={styles.card}>
-      <img src={icon} alt={`${label} icon`} className={styles.icon} />
-      <div className={styles.content}>
-        <p className={styles.value}>
-          {value}
-          {unit}
-        </p>
-        <p className={styles.label}>{label}</p>
+    <div className="user-card-nutrition">
+      <IconSquare icon={icon} iconColor={iconColor} backgroundColor={backgroundColor}/>
+      <div className="nutrition-info">
+        <p className="nutrition-value">{adapteValue }{unit}</p>
+        <p className="nutrition-name">{name}</p>
       </div>
     </div>
   );
 }
 
 KeyInfoCard.propTypes = {
-  icon: PropTypes.string.isRequired,
-  label: PropTypes.string.isRequired,
-  value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+  icon: PropTypes.node.isRequired,
+  iconColor: PropTypes.string.isRequired,
+  backgroundColor: PropTypes.string.isRequired,
+  name: PropTypes.string.isRequired,
+  value: PropTypes.number.isRequired,
   unit: PropTypes.string.isRequired,
 };
 
