@@ -19,6 +19,7 @@ import { standardizeActivityData, standardizeAverageSessionsData, standardizePer
 
 import Page404 from "./pages/Page404";
 import KeyInfoCard from "./components/KeyInfoCard/KeyInfoCard";
+import ScoreChart from "./components/ScoreChart/ScoreChart";
 
 
 const Dashboard = () => {
@@ -91,6 +92,13 @@ const Dashboard = () => {
     return <div>Aucune donnée disponible pour les performances.</div>;
   }
   
+  //simple radial bar chart pour le score
+  const score_data = [{
+    name: 'Score',
+    uv: userData.todayScore * 100,
+    fill: '#ff0101'
+    }
+  ]
   // const radarUserPerformance = [
   //   { subject: 'Cardio', value: 80 },
   //   { subject: 'Energie', value: 90 },
@@ -111,7 +119,9 @@ const Dashboard = () => {
           
         </div>
         <Activitychart userActivitySessions={userActivity.sessions} />
+        <ScoreChart scoreData={score_data}/>
         <PerformanceChart radarUserPerformance={radarUserPerformance}/>
+        
         <div className="user_nutrition">
           <KeyInfoCard 
             icon={<FaFire />} 
