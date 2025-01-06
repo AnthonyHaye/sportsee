@@ -20,6 +20,7 @@ import { standardizeActivityData, standardizeAverageSessionsData, standardizePer
 import Page404 from "./pages/Page404";
 import KeyInfoCard from "./components/KeyInfoCard/KeyInfoCard";
 import ScoreChart from "./components/ScoreChart/ScoreChart";
+import SessionChart from "./components/SessionChart/SessionChart";
 
 
 const Dashboard = () => {
@@ -121,6 +122,7 @@ const Dashboard = () => {
         <Activitychart userActivitySessions={userActivity.sessions} />
         <ScoreChart scoreData={score_data}/>
         <PerformanceChart radarUserPerformance={radarUserPerformance}/>
+        <SessionChart AverageSessions={userAverageSessions.sessions}/>
         
         <div className="user_nutrition">
           <KeyInfoCard 

@@ -1,0 +1,31 @@
+@use '../../styles/variables' as v;
+@use "../../styles/reset";
+@use '../../styles/mixins' as m;
+
+.user_sessions_length {
+    grid-area: user_sessions_length;
+    @include m.container();
+    // padding: 5px;
+    position: relative;
+    flex: 1;
+    h3{
+      @include m.title(1.2rem);
+      position: absolute;
+      top: 2rem;
+      left: 3rem;
+      width: 40%;
+      color: rgba(255, 255, 255, 0.75);
+    }
+    .custom-tooltip {
+      background-color: v.$text-light;
+      padding: 10px;
+      color: v.$text-dark;
+      position: relative;
+      // transform: translateY(-40px);
+      p{
+        @include m.text(0.9rem, v.$text-dark);
+        font-weight: 700;
+        margin: 10px 0;
+      }
+    }
+  }
