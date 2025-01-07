@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from "react-router-dom";
+import { HashRouter as Router, Routes, Route, useParams, Navigate } from "react-router-dom";
 import { FaFire, FaDrumstickBite, FaAppleAlt, FaHamburger } from 'react-icons/fa';
 
 import LeftNav from "./components/LeftNav/LeftNav";
