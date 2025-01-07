@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes, Route, useParams } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, useParams, Navigate } from "react-router-dom";
 import { FaFire, FaDrumstickBite, FaAppleAlt, FaHamburger } from 'react-icons/fa';
 
 import LeftNav from "./components/LeftNav/LeftNav";
@@ -25,7 +25,9 @@ import SessionChart from "./components/SessionChart/SessionChart";
 
 const Dashboard = () => {
   const { userId } = useParams();
-  // console.log("Render le dashboard de l'utilisateur avec l'id :", userId);
+  const defaultUserId = 12;
+
+  const userIdNumber = userId ? parseInt(userId, 10) : defaultUserId;
 
   // États pour les données
   
@@ -39,7 +41,6 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userIdNumber = parseInt(userId, 10);
         // Récupération des données
         const mainDataResponse = await fetchUserData(userIdNumber);        
         const activityDataResponse = await fetchUserActivity(userIdNumber);        
@@ -64,7 +65,7 @@ const Dashboard = () => {
     };
 
     fetchData();
-  }, [userId]);
+  }, [userIdNumber]);
 
   // Affichage d'un message d'erreur si nécessaire
   if (error) {
@@ -138,21 +139,21 @@ const Dashboard = () => {
             backgroundColor="#4AB8FF1A" 
             name="Protéïnes" 
             value={userData.keyData.proteinCount} 
-            unit="kCal"/>
+            unit="g"/>
           <KeyInfoCard 
             icon={<FaAppleAlt/>} 
             iconColor="#F9CE23"
             backgroundColor="#F9CE231A" 
             name="Glucides" 
             value={userData.keyData.carbohydrateCount} 
-            unit="kCal"/>
+            unit="g"/>
           <KeyInfoCard 
             icon={<FaHamburger />} 
             iconColor="#FD5181"
             backgroundColor="#FD51811A" 
             name="Lipides" 
             value={userData.keyData.lipidCount} 
-            unit="kCal"/>
+            unit="g"/>
         </div>
       </div>
       
@@ -164,6 +165,8 @@ function App() {
   return (
     <Router>
       <Routes>
+        {/* Redirection par défaut vers l'utilisateur 12 */}
+        <Route path="/" element={<Navigate to="/user/12" replace />} />
         {/* Route pour le Dashboard */}
         <Route path="/user/:userId" element={<Dashboard />} />
         {/* Route pour la page 404 */}
