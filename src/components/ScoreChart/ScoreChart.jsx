@@ -34,7 +34,7 @@ const ScoreRadialBarchart = ({scoreData}) => {
               endAngle={90 + 360 * (scoreData[0].uv / 100)}
             >
               <RadialBar
-                background={{ fill: '#f5f5f5' }}
+                // background={{ fill: '#f5f121' }}
                 clockWise
                 dataKey="uv"
                 cornerRadius={10}

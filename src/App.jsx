@@ -42,14 +42,18 @@ const Dashboard = () => {
     const fetchData = async () => {
       try {
         // Récupération des données
-        const mainDataResponse = await fetchUserData(userIdNumber);        
-        const activityDataResponse = await fetchUserActivity(userIdNumber);        
+        const mainDataResponse = await fetchUserData(userIdNumber); 
+        console.log("mainDataResponse : " , mainDataResponse)       
+        const activityDataResponse = await fetchUserActivity(userIdNumber);     
+        console.log("activityDataResponse : " , activityDataResponse)   
         const averageSessionDataResponse = await fetchUserAverageSessions(userIdNumber);
         const performanceDataResponse = await fetchUserPerformance(userIdNumber);
 
         // Standardisation des données
-        const standardizedUserData = standardizeUserData(mainDataResponse);        
+        const standardizedUserData = standardizeUserData(mainDataResponse);   
+        console.log("standardizedUserData : " , standardizedUserData)      
         const standardizedActivityData = standardizeActivityData(activityDataResponse);
+        console.log("standardizedActivityData : " , standardizedActivityData) 
         const standardizedAverageSessionsData = standardizeAverageSessionsData(averageSessionDataResponse);
         const standardizedPerformanceData = standardizePerformanceData(performanceDataResponse);
 
@@ -93,6 +97,8 @@ const Dashboard = () => {
     console.warn("Aucune donnée pour le graphique radar");
     return <div>Aucune donnée disponible pour les performances.</div>;
   }
+
+  
   
   //simple radial bar chart pour le score
   const score_data = [{

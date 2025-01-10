@@ -25,6 +25,7 @@ export const fetchUserData = async (userId) => {
   }
 };
 
+
 /**
  * Récupère les données d'activité de l'utilisateur à partir de l'API ou des données mockées.
  * 

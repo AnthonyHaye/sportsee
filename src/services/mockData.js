@@ -2,7 +2,7 @@ export const mockedUserData = [
   {
       id: 12,
       userInfos: {
-          firstName: 'Baptiste',
+          firstName: 'Cindy',
           lastName: 'Foucault',
           age: 49,
       },
@@ -13,22 +13,6 @@ export const mockedUserData = [
           carbohydrateCount: 290,
           lipidCount: 50
       }
-  },
-
-  {
-    id: 13,
-    userInfos: {
-        firstName: 'Cindy',
-        lastName: 'Foucault',
-        age: 49,
-    },
-    todayScore: 0.85,
-    keyData: {
-        calorieCount: 1356,
-        proteinCount: 300,
-        carbohydrateCount: 90,
-        lipidCount: 500
-    }
   },
   {
       id: 18,
@@ -88,46 +72,6 @@ export const mockedUserActivity = [
           }
       ]
   },
-  {
-    userId: 13,
-    sessions: [
-        {
-            day: '2020-07-01',
-            kilogram: 50,
-            calories: 240
-        },
-        {
-            day: '2020-07-02',
-            kilogram: 55,
-            calories: 220
-        },
-        {
-            day: '2020-07-03',
-            kilogram: 52,
-            calories: 280
-        },
-        {
-            day: '2020-07-04',
-            kilogram: 56,
-            calories: 290
-        },
-        {
-            day: '2020-07-05',
-            kilogram: 51,
-            calories: 160
-        },
-        {
-            day: '2020-07-06',
-            kilogram: 52,
-            calories: 162
-        },
-        {
-            day: '2020-07-07',
-            kilogram: 53,
-            calories: 390
-        }
-    ]
-    },
   {
       userId: 18,
       sessions: [
@@ -206,39 +150,6 @@ export const mockedUserAverageSessions = [
       ]
   },
   {
-    userId: 13,
-    sessions: [
-        {
-            day: 1,
-            sessionLength: 30
-        },
-        {
-            day: 2,
-            sessionLength: 23
-        },
-        {
-            day: 3,
-            sessionLength: 45
-        },
-        {
-            day: 4,
-            sessionLength: 50
-        },
-        {
-            day: 5,
-            sessionLength: 0
-        },
-        {
-            day: 6,
-            sessionLength: 0
-        },
-        {
-            day: 7,
-            sessionLength: 60
-        }
-    ]
-},
-  {
       userId: 18,
       sessions: [
           {
@@ -312,43 +223,6 @@ export const mockedUserPerformance = [
           }
       ]
   },
-  {
-    userId: 13,
-    kind: {
-        1: 'cardio',
-        2: 'energy',
-        3: 'endurance',
-        4: 'strength',
-        5: 'speed',
-        6: 'intensity'
-    },
-    data: [
-        {
-            value: 100,
-            kind: 1
-        },
-        {
-            value: 150,
-            kind: 2
-        },
-        {
-            value: 200,
-            kind: 3
-        },
-        {
-            value: 100,
-            kind: 4
-        },
-        {
-            value: 50,
-            kind: 5
-        },
-        {
-            value: 90,
-            kind: 6
-        }
-    ]
-},
   {
       userId: 18,
       kind: {
