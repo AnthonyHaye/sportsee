@@ -6,7 +6,7 @@
   width: 258px;
   height: 124px;
   padding: 10px;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   border-radius: 5px;
 }
 .user-card-nutrition .icon_tab {
@@ -29,7 +29,7 @@
 }
 .user-card-nutrition .nutrition-info .nutrition-name {
   font-size: 14px;
-  color: #74798C;
+  color: #74798c;
   margin: 0;
   margin-top: 1rem;
-}/*# sourceMappingURL=KeyInfoCard.css.map */
+} /*# sourceMappingURL=KeyInfoCard.css.map */

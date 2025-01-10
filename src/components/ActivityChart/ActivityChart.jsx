@@ -1,9 +1,17 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 //react-icons
-import { BsDot } from "react-icons/bs";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import CustomTooltip from '../CustomTooltip/CustomTooltip';
-import "./Activitychart.scss"
+import { BsDot } from 'react-icons/bs'
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+} from 'recharts'
+import CustomTooltip from '../CustomTooltip/CustomTooltip'
+import './Activitychart.scss'
 
 /**
  * Un composant de diagramme à barres qui affiche l'activité quotidienne de l'utilisateur.
@@ -18,11 +26,10 @@ import "./Activitychart.scss"
  * @returns {JSX.Element} Le composant de diagramme à barres rendu.
  */
 const Activitychart = ({ userActivitySessions }) => {
-  // console.log("Données des sessions utilisateur :", userActivitySessions);
   //calcul des limites pour l'axe Y (poids)
-  const minWeight = Math.min(...userActivitySessions.map(session => session.kilogram))-1;
-  // console.log("miniWeight :", minWeight)
-  const maxWeight = minWeight + 7;
+  const minWeight =
+    Math.min(...userActivitySessions.map((session) => session.kilogram)) - 1
+  const maxWeight = minWeight + 7
 
   //générer les valeurs des ticks pour l'axe Y des poids (un trait tous les kg)
   //nvl instance = définir la longueur de tableau
@@ -30,31 +37,38 @@ const Activitychart = ({ userActivitySessions }) => {
   //si 70 et 73kg+1 donc 4
   //_ élément actuel du tableau, i = index de l'élement
   //chaque élement sera calculé en ajoutant l'index à min weight
-  //70 +0, 70+1,  70+2 etc...=> ticks pr le Y axis 
-  const weightTicks = Array.from({ length: maxWeight - minWeight + 1 }, (_, i) => minWeight + i );
+  //70 +0, 70+1,  70+2 etc...=> ticks pr le Y axis
+  const weightTicks = Array.from(
+    { length: maxWeight - minWeight + 1 },
+    (_, i) => minWeight + i,
+  )
 
   return (
     <div className="user_daily_activity">
-    <div className='daily_activity_header'>
-      <h2>Activité Quotidienne</h2>
-      <div className='weight_kcal'>
-        <div className='weight'>
-          <BsDot className='weight_dot'/>
-          <p>Poids (kg)</p>
-        </div>
-        <div className='kcal'>
-        <BsDot className='kcal_dot'/>
-          <p>Calories brûlées (kCal)</p>
+      <div className="daily_activity_header">
+        <h2>Activité Quotidienne</h2>
+        <div className="weight_kcal">
+          <div className="weight">
+            <BsDot className="weight_dot" />
+            <p>Poids (kg)</p>
+          </div>
+          <div className="kcal">
+            <BsDot className="kcal_dot" />
+            <p>Calories brûlées (kCal)</p>
+          </div>
         </div>
       </div>
-    </div>
-    <div className='daily_activity_barchart'>
-    <ResponsiveContainer width="100%" height="100%">
-      <BarChart data={userActivitySessions}>
-        <CartesianGrid strokeDasharray="1 1" horizontal={true} vertical={false} />
-        <XAxis dataKey="day" tickFormatter={(value, index) => index + 1} />
-        {/* axe Y visible pour les poids */}
-        <YAxis
+      <div className="daily_activity_barchart">
+        <ResponsiveContainer width="100%" height="100%">
+          <BarChart data={userActivitySessions}>
+            <CartesianGrid
+              strokeDasharray="1 1"
+              horizontal={true}
+              vertical={false}
+            />
+            <XAxis dataKey="day" tickFormatter={(value, index) => index + 1} />
+            {/* axe Y visible pour les poids */}
+            <YAxis
               yAxisId="weight"
               orientation="right"
               axisLine={false}
@@ -67,16 +81,31 @@ const Activitychart = ({ userActivitySessions }) => {
             <YAxis
               yAxisId="calories"
               hide={true}
-              domain={[0, 600]}//échelle fixée des calories de 0 à 600
+              domain={[0, 600]} //échelle fixée des calories de 0 à 600
             />
-        <Tooltip content={<CustomTooltip isSingleValue={false} />} />
-        <Bar dataKey="kilogram" yAxisId="weight" fill='#123456' barSize={8} radius={[10, 10, 0, 0]} />
-        <Bar dataKey="calories" yAxisId="calories" fill='#FF0101' barSize={8} radius={[10, 10, 0, 0]} />
-      </BarChart>
-    </ResponsiveContainer>
+            <Tooltip
+              content={<CustomTooltip isSingleValue={false} />}
+              cursor={{ fill: '#C4C4C47F' }}
+            />
+            <Bar
+              dataKey="kilogram"
+              yAxisId="weight"
+              fill="#282D30"
+              barSize={8}
+              radius={[10, 10, 0, 0]}
+            />
+            <Bar
+              dataKey="calories"
+              yAxisId="calories"
+              fill="#FF0101"
+              barSize={8}
+              radius={[10, 10, 0, 0]}
+            />
+          </BarChart>
+        </ResponsiveContainer>
+      </div>
     </div>
-        </div>
-  );
+  )
 }
 
 Activitychart.propTypes = {
@@ -85,8 +114,8 @@ Activitychart.propTypes = {
       day: PropTypes.string.isRequired,
       kilogram: PropTypes.number.isRequired,
       calories: PropTypes.number.isRequired,
-    })
+    }),
   ).isRequired,
-};
+}
 
-export default Activitychart;
+export default Activitychart

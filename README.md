@@ -21,16 +21,19 @@
 </details>
 
 <!-- ABOUT THE PROJECT -->
+
 ## À propos du projet
 
 **SportSee** est le projet 12/14 de ma formation OpenClassroom.
 
 ### Mission :
+
 En tant que développeur chez **SportSee**, une startup spécialisée dans le coaching sportif, vous êtes chargé de développer une nouvelle version de la page profil utilisateur. Cette page permet aux utilisateurs de suivre des indicateurs tels que le nombre de sessions réalisées et les calories brûlées.
 
 L'objectif principal est de créer un tableau de bord d'analytique sportif interactif en utilisant **React**, et d'afficher des graphiques et des diagrammes basés sur des données récupérées via une **API**.
 
 ### Particularités :
+
 - **Documentation complète** avec un ReadMe, **JSDoc**, et des **PropTypes** pour une meilleure collaboration au sein de l'équipe.
 - Intégration de plusieurs types de graphiques avec la librairie **Recharts**.
 
@@ -50,16 +53,19 @@ L'objectif principal est de créer un tableau de bord d'analytique sportif inter
 ### Étapes pour configurer le projet :
 
 1. **Cloner le dépôt du projet** :
+
    ```bash
    git clone https://github.com/AnthonyHaye/sportsee.git
    ```
 
 2. **Cloner le dépôt de l'API** et suivre le ReadMe pour démarrer le serveur backend :
+
    ```bash
    git clone https://github.com/OpenClassrooms-Student-Center/P9-front-end-dashboard.git
    ```
 
 3. **Installer les dépendances du projet** :
+
    ```bash
    npm install
    ```
@@ -88,7 +94,6 @@ Deux routes sont disponibles pour visualiser les données des utilisateurs enreg
 
 Ces deux utilisateurs contiennent des données mockées ou récupérées de l'API selon la configuration du fichier `.env`.
 
-
 ## Gestion des erreurs
 
 L'application gère les erreurs pouvant survenir lors de la récupération des données via l'API ou lorsqu'une route non valide est visitée. Voici comment ces erreurs sont gérées :
@@ -110,18 +115,16 @@ Si un utilisateur tente d'accéder à une URL qui n'est pas définie dans l'appl
 
 ```jsx
 if (error) {
-  return <NotFoundPage errorMessage="Erreur lors du chargement des données, veuillez réessayer plus tard." />;
+  return (
+    <NotFoundPage errorMessage="Erreur lors du chargement des données, veuillez réessayer plus tard." />
+  )
 } else {
-  return <NotFoundPage />;
+  return <NotFoundPage />
 }
 ```
 
 Cela garantit une gestion robuste des erreurs pour améliorer l'expérience utilisateur en cas de problème avec les données ou la navigation.
 
-
 ## Contact
 
 Anthony Hayé - [GitHub](https://github.com/AnthonyHaye/)
-
-
-

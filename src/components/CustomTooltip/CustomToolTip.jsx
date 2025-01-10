@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
 
 /**
  * Composant Tooltip personnalisé pour afficher des informations sur les graphiques.
@@ -17,21 +17,21 @@ const CustomTooltip = ({ active, payload, isSingleValue }) => {
       <div className="custom-tooltip">
         {/* conditionnement si il y a une ou 2 valeurs à afficher */}
         {isSingleValue ? (
-          <p>{`${payload[0].value} min`}</p>  
-          // affiche la durée en minutes pour le LineChart
+          <p>{`${payload[0].value} min`}</p>
         ) : (
+          // affiche la durée en minutes pour le LineChart
           <>
             {/* affiche le poids en kg et les kCal */}
-            <p>{`${payload[0].value} kg`}</p>  
-            <p>{`${payload[1].value} kCal`}</p>  
+            <p>{`${payload[0].value} kg`}</p>
+            <p>{`${payload[1].value} kCal`}</p>
           </>
         )}
       </div>
-    );
+    )
   }
-  
-  return null;
-};
+
+  return null
+}
 
 // Définition des types de props attendues
 CustomTooltip.propTypes = {
@@ -39,11 +39,10 @@ CustomTooltip.propTypes = {
   payload: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.number,
-    })
+    }),
   ),
   //ajout d'une prop pour indiquer le mode d'affichage
-  isSingleValue: PropTypes.bool,  
-};
+  isSingleValue: PropTypes.bool,
+}
 
-export default CustomTooltip;
-
+export default CustomTooltip

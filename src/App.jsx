@@ -1,120 +1,142 @@
-import { useEffect, useState } from "react";
-import { HashRouter as Router, Routes, Route, useParams, Navigate } from "react-router-dom";
-import { FaFire, FaDrumstickBite, FaAppleAlt, FaHamburger } from 'react-icons/fa';
+import { useEffect, useState } from 'react'
+import {
+  HashRouter as Router,
+  Routes,
+  Route,
+  useParams,
+  Navigate,
+} from 'react-router-dom'
+import {
+  FaFire,
+  FaDrumstickBite,
+  FaAppleAlt,
+  FaHamburger,
+} from 'react-icons/fa'
 
-import LeftNav from "./components/LeftNav/LeftNav";
-import TopNav from "./components/TopNav/TopNav";
+import LeftNav from './components/LeftNav/LeftNav'
+import TopNav from './components/TopNav/TopNav'
 
+import Activitychart from './components/ActivityChart/ActivityChart'
+import PerformanceChart from './components/PerfomanceChart/PerformanceChart'
 
-import Activitychart from "./components/ActivityChart/ActivityChart";
-import PerformanceChart from "./components/PerfomanceChart/PerformanceChart";
-
-import './styles/App.scss';
+import './styles/App.scss'
 
 //Data services
-import { fetchUserData, fetchUserActivity, fetchUserAverageSessions, fetchUserPerformance } from "./services/apiService";
+import {
+  fetchUserData,
+  fetchUserActivity,
+  fetchUserAverageSessions,
+  fetchUserPerformance,
+} from './services/apiService'
 //Data standardisation
-import { standardizeActivityData, standardizeAverageSessionsData, standardizePerformanceData, standardizeUserData } from "./utils/utils";
+import {
+  standardizeActivityData,
+  standardizeAverageSessionsData,
+  standardizePerformanceData,
+  standardizeUserData,
+} from './utils/utils'
 
-
-import Page404 from "./pages/Page404";
-import KeyInfoCard from "./components/KeyInfoCard/KeyInfoCard";
-import ScoreChart from "./components/ScoreChart/ScoreChart";
-import SessionChart from "./components/SessionChart/SessionChart";
-
+import Page404 from './pages/Page404'
+import KeyInfoCard from './components/KeyInfoCard/KeyInfoCard'
+import ScoreChart from './components/ScoreChart/ScoreChart'
+import SessionChart from './components/SessionChart/SessionChart'
 
 const Dashboard = () => {
-  const { userId } = useParams();
-  const defaultUserId = 12;
+  const { userId } = useParams()
+  const defaultUserId = 12
 
-  const userIdNumber = userId ? parseInt(userId, 10) : defaultUserId;
+  const userIdNumber = userId ? parseInt(userId, 10) : defaultUserId
 
   // États pour les données
-  
-  const [userData, setUserData] = useState(null);
-  const [userActivity, setUserActivity] = useState(null);  
-  const [userAverageSessions, setUserAverageSessions] = useState(null);
-  const [userPerformance, setUserPerformance] = useState(null);
-  // console.log("userPerformance :" , userPerformance)
-  const [error, setError] = useState(null);
+
+  const [userData, setUserData] = useState(null)
+  const [userActivity, setUserActivity] = useState(null)
+  const [userAverageSessions, setUserAverageSessions] = useState(null)
+  const [userPerformance, setUserPerformance] = useState(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Récupération des données
-        const mainDataResponse = await fetchUserData(userIdNumber); 
-        console.log("mainDataResponse : " , mainDataResponse)       
-        const activityDataResponse = await fetchUserActivity(userIdNumber);     
-        console.log("activityDataResponse : " , activityDataResponse)   
-        const averageSessionDataResponse = await fetchUserAverageSessions(userIdNumber);
-        const performanceDataResponse = await fetchUserPerformance(userIdNumber);
+        const mainDataResponse = await fetchUserData(userIdNumber)
+
+        const activityDataResponse = await fetchUserActivity(userIdNumber)
+        const averageSessionDataResponse =
+          await fetchUserAverageSessions(userIdNumber)
+        const performanceDataResponse = await fetchUserPerformance(userIdNumber)
 
         // Standardisation des données
-        const standardizedUserData = standardizeUserData(mainDataResponse);   
-        console.log("standardizedUserData : " , standardizedUserData)      
-        const standardizedActivityData = standardizeActivityData(activityDataResponse);
-        console.log("standardizedActivityData : " , standardizedActivityData) 
-        const standardizedAverageSessionsData = standardizeAverageSessionsData(averageSessionDataResponse);
-        const standardizedPerformanceData = standardizePerformanceData(performanceDataResponse);
+        const standardizedUserData = standardizeUserData(mainDataResponse)
+        const standardizedActivityData =
+          standardizeActivityData(activityDataResponse)
+        const standardizedAverageSessionsData = standardizeAverageSessionsData(
+          averageSessionDataResponse,
+        )
+        const standardizedPerformanceData = standardizePerformanceData(
+          performanceDataResponse,
+        )
 
         // Mise à jour des états
-        setUserData(standardizedUserData);
-        setUserActivity(standardizedActivityData);
-        setUserAverageSessions(standardizedAverageSessionsData);
-        setUserPerformance(standardizedPerformanceData);
+        setUserData(standardizedUserData)
+        setUserActivity(standardizedActivityData)
+        setUserAverageSessions(standardizedAverageSessionsData)
+        setUserPerformance(standardizedPerformanceData)
       } catch (error) {
-        console.error("Erreur lors du chargement des données :", error);
-        setError("Erreur lors du chargement des données, veuillez réessayer plus tard.");
+        console.error('Erreur lors du chargement des données :', error)
+        setError(
+          'Erreur lors du chargement des données, veuillez réessayer plus tard.',
+        )
       }
-    };
+    }
 
-    fetchData();
-  }, [userIdNumber]);
+    fetchData()
+  }, [userIdNumber])
 
   // Affichage d'un message d'erreur si nécessaire
   if (error) {
-    return <Page404 errorMsg={error}/>
-  } else if (!userData || !userActivity || !userAverageSessions || !userPerformance){
-    return <Page404/>
+    return <Page404 errorMsg={error} />
+  } else if (
+    !userData ||
+    !userActivity ||
+    !userAverageSessions ||
+    !userPerformance
+  ) {
+    return <Page404 />
   }
 
   // Affichage d'un état de chargement si les données ne sont pas encore prêtes
   if (!userActivity || !userData || !userAverageSessions || !userPerformance) {
-    console.log("Données non prêtes :", { userActivity, userData, userAverageSessions, userPerformance });
-    return <div>Chargement des données...</div>;
+    console.log('Données non prêtes :', {
+      userActivity,
+      userData,
+      userAverageSessions,
+      userPerformance,
+    })
+    return <div>Chargement des données...</div>
   }
-
 
   //doc recharts subject et value pour le radar graph
   //obtenir le label correspondant (compatibles avec Recharts)
-  
-  const radarUserPerformance = userPerformance.data.map(item => ({
-    subject : item.subject,
-    value: item.value
-  }));
+
+  const radarUserPerformance = userPerformance.data.map((item) => ({
+    subject: item.subject,
+    value: item.value,
+  }))
 
   if (!radarUserPerformance || radarUserPerformance.length === 0) {
-    console.warn("Aucune donnée pour le graphique radar");
-    return <div>Aucune donnée disponible pour les performances.</div>;
+    console.warn('Aucune donnée pour le graphique radar')
+    return <div>Aucune donnée disponible pour les performances.</div>
   }
 
-  
-  
   //simple radial bar chart pour le score
-  const score_data = [{
-    name: 'Score',
-    uv: userData.todayScore * 100,
-    fill: '#ff0101'
-    }
+  const score_data = [
+    {
+      name: 'Score',
+      uv: userData.todayScore * 100,
+      fill: '#ff0101',
+    },
   ]
-  // const radarUserPerformance = [
-  //   { subject: 'Cardio', value: 80 },
-  //   { subject: 'Energie', value: 90 },
-  //   { subject: 'Endurance', value: 70 },
-  //   { subject: 'Force', value: 85 },
-  //   { subject: 'Vitesse', value: 95 },
-  //   { subject: 'Intensite', value: 95 }
-  // ];
 
   return (
     <>
@@ -122,50 +144,57 @@ const Dashboard = () => {
       <LeftNav />
       <div className="main_content">
         <div className="user_header">
-          <h1>Bonjour <span className="user_first_name">{userData.userInfos.firstName}</span></h1>
-          <p>Félicitations ! Vous avez explosé vos objectifs d&apos;hier  👏 </p>
-          
+          <h1>
+            Bonjour{' '}
+            <span className="user_first_name">
+              {userData.userInfos.firstName}
+            </span>
+          </h1>
+          <p>Félicitations ! Vous avez explosé vos objectifs d&apos;hier 👏 </p>
         </div>
         <Activitychart userActivitySessions={userActivity.sessions} />
-        <ScoreChart scoreData={score_data}/>
-        <PerformanceChart radarUserPerformance={radarUserPerformance}/>
-        <SessionChart AverageSessions={userAverageSessions.sessions}/>
-        
+        <ScoreChart scoreData={score_data} />
+        <PerformanceChart radarUserPerformance={radarUserPerformance} />
+        <SessionChart AverageSessions={userAverageSessions.sessions} />
+
         <div className="user_nutrition">
-          <KeyInfoCard 
-            icon={<FaFire />} 
+          <KeyInfoCard
+            icon={<FaFire />}
             iconColor="#FF0000"
-            backgroundColor="#FF00000D" 
-            name="Calories" 
-            value={userData.keyData.calorieCount} 
-            unit="kCal"/>  
-          <KeyInfoCard 
-            icon={<FaDrumstickBite />} 
+            backgroundColor="#FF00000D"
+            name="Calories"
+            value={userData.keyData.calorieCount}
+            unit="kCal"
+          />
+          <KeyInfoCard
+            icon={<FaDrumstickBite />}
             iconColor="#4AB8FF"
-            backgroundColor="#4AB8FF1A" 
-            name="Protéïnes" 
-            value={userData.keyData.proteinCount} 
-            unit="g"/>
-          <KeyInfoCard 
-            icon={<FaAppleAlt/>} 
+            backgroundColor="#4AB8FF1A"
+            name="Protéïnes"
+            value={userData.keyData.proteinCount}
+            unit="g"
+          />
+          <KeyInfoCard
+            icon={<FaAppleAlt />}
             iconColor="#F9CE23"
-            backgroundColor="#F9CE231A" 
-            name="Glucides" 
-            value={userData.keyData.carbohydrateCount} 
-            unit="g"/>
-          <KeyInfoCard 
-            icon={<FaHamburger />} 
+            backgroundColor="#F9CE231A"
+            name="Glucides"
+            value={userData.keyData.carbohydrateCount}
+            unit="g"
+          />
+          <KeyInfoCard
+            icon={<FaHamburger />}
             iconColor="#FD5181"
-            backgroundColor="#FD51811A" 
-            name="Lipides" 
-            value={userData.keyData.lipidCount} 
-            unit="g"/>
+            backgroundColor="#FD51811A"
+            name="Lipides"
+            value={userData.keyData.lipidCount}
+            unit="g"
+          />
         </div>
       </div>
-      
     </>
-  );
-};
+  )
+}
 
 function App() {
   return (
@@ -179,7 +208,7 @@ function App() {
         <Route path="*" element={<Page404 />} />
       </Routes>
     </Router>
-  );
+  )
 }
 
-export default App;
+export default App

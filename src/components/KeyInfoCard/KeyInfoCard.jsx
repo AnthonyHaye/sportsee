@@ -1,6 +1,6 @@
-import PropTypes from "prop-types";
-import "./KeyInfoCard.scss";
-import IconSquare from "../IconSquare";
+import PropTypes from 'prop-types'
+import './KeyInfoCard.scss'
+import IconSquare from '../IconSquare'
 
 /**
  * KeyInfoCard Component - Affiche une information clé avec une icône.
@@ -15,13 +15,20 @@ function KeyInfoCard({ icon, iconColor, backgroundColor, name, value, unit }) {
   const adapteValue = value.toLocaleString('fr-FR').replace(/\s/g, ',')
   return (
     <div className="user-card-nutrition">
-      <IconSquare icon={icon} iconColor={iconColor} backgroundColor={backgroundColor}/>
+      <IconSquare
+        icon={icon}
+        iconColor={iconColor}
+        backgroundColor={backgroundColor}
+      />
       <div className="nutrition-info">
-        <p className="nutrition-value">{adapteValue }{unit}</p>
+        <p className="nutrition-value">
+          {adapteValue}
+          {unit}
+        </p>
         <p className="nutrition-name">{name}</p>
       </div>
     </div>
-  );
+  )
 }
 
 KeyInfoCard.propTypes = {
@@ -31,6 +38,6 @@ KeyInfoCard.propTypes = {
   name: PropTypes.string.isRequired,
   value: PropTypes.number.isRequired,
   unit: PropTypes.string.isRequired,
-};
+}
 
-export default KeyInfoCard;
+export default KeyInfoCard

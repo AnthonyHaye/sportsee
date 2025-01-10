@@ -1,60 +1,61 @@
 @use '../../styles/variables' as v;
-@use "../../styles/reset";
+@use '../../styles/reset';
 @use '../../styles/mixins' as m;
 
 .user_daily_activity {
-    grid-area: user_daily_activity;
-    @include m.container();
-    .daily_activity_header{
+  grid-area: user_daily_activity;
+  @include m.container();
+  .daily_activity_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 30px;
+    h2 {
+      @include m.title(1.3rem, 700);
+    }
+    .weight_kcal {
       display: flex;
+      width: 40%;
       align-items: center;
       justify-content: space-between;
-      height: 30px;
-      h2{
-        @include m.title(1.3rem, 700)
-      }
-      .weight_kcal{
+      .weight,
+      .kcal {
         display: flex;
-        width: 40%;
         align-items: center;
-        justify-content: space-between;
-        .weight, .kcal {
-          display: flex;
-          align-items: center;
-          p{
-            @include m.text(1.2rem);
-          }
+        p {
+          @include m.text(1.2rem);
         }
-        .weight_dot{
-          @include m.text(2.5rem, v.$text-dark);
-        }
-        .kcal_dot{
-          @include m.text(2.5rem, v.$color-primary);
-        }
+      }
+      .weight_dot {
+        @include m.text(2.5rem, v.$text-dark);
+      }
+      .kcal_dot {
+        @include m.text(2.5rem, v.$color-primary);
       }
     }
-    .daily_activity_barchart{
-      flex: 1;
-      .custom-tooltip {
-        background-color: v.$color-primary;
-        padding: 10px;
-        color: v.$text-light;
-        position: relative;
-        transform: translateY(-40px);
-        p{
-          @include m.text(0.9rem, v.$text-light);
-          font-weight: 700;
-          margin: 10px 0;
-          padding-bottom: 5px;
-        }
-      }
-  
-      .recharts-cartesian-axis-tick-line{
-        stroke: none;
-      }
-      .recharts-cartesian-axis-tick-value tspan{
-        font-size: 1rem;
-        color: v.$text-mid;
-      }
   }
+  .daily_activity_barchart {
+    flex: 1;
+    .custom-tooltip {
+      background-color: v.$color-primary;
+      padding: 10px;
+      color: v.$text-light;
+      position: relative;
+      transform: translateY(-40px);
+      p {
+        @include m.text(0.9rem, v.$text-light);
+        font-weight: 700;
+        margin: 10px 0;
+        padding-bottom: 5px;
+      }
+    }
+
+    .recharts-cartesian-axis-tick-line {
+      stroke: none;
+    }
+    .recharts-cartesian-axis-tick-value tspan {
+      font-size: 1rem;
+      color: v.$text-mid;
+    }
   }
+}

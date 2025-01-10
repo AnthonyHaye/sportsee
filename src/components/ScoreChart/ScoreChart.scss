@@ -1,15 +1,15 @@
 @use '../../styles/variables' as v;
-@use "../../styles/reset";
+@use '../../styles/reset';
 @use '../../styles/mixins' as m;
 
 .user_score {
   grid-area: user_score;
   @include m.container();
   flex: 1;
-  h3{
-    @include m.title(1.5rem, 700)
+  h3 {
+    @include m.title(1.5rem, 700);
   }
-  .obj_text{
+  .obj_text {
     @include m.text(1.2rem);
   }
 }

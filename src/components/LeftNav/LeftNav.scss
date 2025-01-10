@@ -1,40 +1,40 @@
-@use "../../styles/variables" as v;
+@use '../../styles/variables' as v;
 
-.left_nav{
-    position: fixed;
-    left: 0;
-    top:80px;
-    z-index:5;
-    height: calc(100vh - 80px); 
-    width: 7vw;
-    background-color: v.$color-bgnav;
+.left_nav {
+  position: fixed;
+  left: 0;
+  top: 80px;
+  z-index: 5;
+  height: calc(100vh - 80px);
+  width: 7vw;
+  background-color: v.$color-bgnav;
+  display: flex;
+  align-items: center;
+  padding: 1.5rem;
+  .left_nav_links {
     display: flex;
+    color: v.$text-light;
+    justify-content: center;
     align-items: center;
-    padding: 1.5rem;
-    .left_nav_links{
-        display: flex;
-        color: v.$text-light;
-        justify-content: center;
-        align-items: center;
-        width: 100%;
-        ul{
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding-inline-start: 0;
-            margin: 0;
-            li{
-                list-style-type: none;
-                margin-bottom: 2rem;
-                .icon_tab{
-                    border-radius: 10px;
-                    svg{
-                        padding: 1rem;
-                        font-size: 5rem;
-                    }
-                }
-            }
+    width: 100%;
+    ul {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding-inline-start: 0;
+      margin: 0;
+      li {
+        list-style-type: none;
+        margin-bottom: 2rem;
+        .icon_tab {
+          border-radius: 10px;
+          svg {
+            padding: 1rem;
+            font-size: 5rem;
+          }
         }
+      }
     }
+  }
 }

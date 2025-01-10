@@ -3,7 +3,8 @@
   box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   min-height: 100vh;
@@ -14,7 +15,7 @@ html, body {
 .user_daily_activity {
   grid-area: user_daily_activity;
   padding: 10px;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   border-radius: 5px;
 }
 .user_daily_activity .daily_activity_header {
@@ -35,13 +36,15 @@ html, body {
   align-items: center;
   justify-content: space-between;
 }
-.user_daily_activity .daily_activity_header .weight_kcal .weight, .user_daily_activity .daily_activity_header .weight_kcal .kcal {
+.user_daily_activity .daily_activity_header .weight_kcal .weight,
+.user_daily_activity .daily_activity_header .weight_kcal .kcal {
   display: flex;
   align-items: center;
 }
-.user_daily_activity .daily_activity_header .weight_kcal .weight p, .user_daily_activity .daily_activity_header .weight_kcal .kcal p {
+.user_daily_activity .daily_activity_header .weight_kcal .weight p,
+.user_daily_activity .daily_activity_header .weight_kcal .kcal p {
   font-size: 1.2rem;
-  color: #74798C;
+  color: #74798c;
   margin: 0;
 }
 .user_daily_activity .daily_activity_header .weight_kcal .weight_dot {
@@ -72,10 +75,15 @@ html, body {
   margin: 10px 0;
   padding-bottom: 5px;
 }
-.user_daily_activity .daily_activity_barchart .recharts-cartesian-axis-tick-line {
+.user_daily_activity
+  .daily_activity_barchart
+  .recharts-cartesian-axis-tick-line {
   stroke: none;
 }
-.user_daily_activity .daily_activity_barchart .recharts-cartesian-axis-tick-value tspan {
+.user_daily_activity
+  .daily_activity_barchart
+  .recharts-cartesian-axis-tick-value
+  tspan {
   font-size: 1rem;
-  color: #74798C;
-}/*# sourceMappingURL=ActivityChart.css.map */
+  color: #74798c;
+} /*# sourceMappingURL=ActivityChart.css.map */
