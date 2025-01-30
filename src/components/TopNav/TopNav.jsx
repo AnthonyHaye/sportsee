@@ -1,3 +1,4 @@
+import React from 'react';
 import logo from '../../assets/sportsee_logo.svg'
 import './TopNav.scss'
 
@@ -7,20 +8,23 @@ import './TopNav.scss'
  * @returns {React.Element} Le composant TopNav.
  */
 
-const TopNav = () => {
+const navLinks = ["Accueil", "Profil", "Réglage", "Communauté"];
+
+const TopNav = React.memo(() => {
   return (
     <nav className="top_nav" aria-label="Navigation principale">
       <img src={logo} alt="sport see logo" className="logo" />
       <div className="top_nav_links">
         <ul>
-          <li>Accueil</li>
-          <li>Profil</li>
-          <li>Réglage</li>
-          <li>Communauté</li>
+          {navLinks.map((link, index) => (
+            <li key={index}>{link}</li>
+          ))}
         </ul>
       </div>
     </nav>
-  )
-}
+  );
+});
+
+TopNav.displayName = "TopNav";
 
 export default TopNav

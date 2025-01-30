@@ -1,3 +1,4 @@
+import React from 'react'
 import PropTypes from 'prop-types'
 
 //recharts components
@@ -17,7 +18,11 @@ import './ScoreChart.scss'
  * @returns {JSX.Element} Le composant de graphique radial en barres rendu.
  */
 
-const ScoreRadialBarchart = ({ scoreData }) => {
+const ScoreRadialBarchart = React.memo(({ scoreData = [] }) => {
+  if (scoreData.length === 0) {
+    return <div className="user_score">Aucune donnée disponible.</div>;
+  }
+
   return (
     <div className="user_score">
       <h3>Score</h3>
@@ -30,14 +35,14 @@ const ScoreRadialBarchart = ({ scoreData }) => {
           barSize={10}
           data={scoreData}
           startAngle={90}
-          endAngle={90 + 360 * (scoreData[0].uv / 100)}
+          endAngle={90 + 360 * (scoreData[0]?.uv / 100)}
         >
           <circle cx="50%" cy="50%" r="26%" fill="#ffffff" />
           <RadialBar
             clockWise
             dataKey="uv"
             cornerRadius={10}
-            fill={scoreData[0].fill}
+            fill={scoreData[0]?.fill}
           />
           <text
             x="50%"
@@ -53,7 +58,7 @@ const ScoreRadialBarchart = ({ scoreData }) => {
               fontWeight="bold"
               fill="#000"
             >
-              {`${scoreData[0].uv}%`}
+              {`${scoreData[0]?.uv ?? 0}%`}
             </tspan>
             <tspan
               x="50%"
@@ -68,8 +73,10 @@ const ScoreRadialBarchart = ({ scoreData }) => {
         </RadialBarChart>
       </ResponsiveContainer>
     </div>
-  )
-}
+  );
+});
+
+ScoreRadialBarchart.displayName = "ScoreRadialBarchart";
 
 ScoreRadialBarchart.propTypes = {
   scoreData: PropTypes.arrayOf(

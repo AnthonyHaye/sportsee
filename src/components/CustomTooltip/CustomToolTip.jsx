@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types'
+import React from 'react';
 
 /**
  * Composant Tooltip personnalisé pour afficher des informations sur les graphiques.
@@ -11,38 +12,33 @@ import PropTypes from 'prop-types'
  *
  * @returns {JSX.Element|null} - Retourne le JSX pour le tooltip ou null si non actif.
  */
-const CustomTooltip = ({ active, payload, isSingleValue }) => {
-  if (active && payload && payload.length) {
-    return (
-      <div className="custom-tooltip">
-        {/* conditionnement si il y a une ou 2 valeurs à afficher */}
-        {isSingleValue ? (
-          <p>{`${payload[0].value} min`}</p>
-        ) : (
-          // affiche la durée en minutes pour le LineChart
-          <>
-            {/* affiche le poids en kg et les kCal */}
-            <p>{`${payload[0].value} kg`}</p>
-            <p>{`${payload[1].value} kCal`}</p>
-          </>
-        )}
-      </div>
-    )
-  }
+const CustomTooltip = React.memo(({ active, payload, isSingleValue }) => {
+  if (!active || !payload?.length) return null;
 
-  return null
-}
+  return (
+    <div className="custom-tooltip">
+      {isSingleValue ? (
+        <p>{`${payload[0].value} min`}</p>
+      ) : (
+        <>
+          <p>{`${payload[0].value} kg`}</p>
+          {payload[1] && <p>{`${payload[1].value} kCal`}</p>}
+        </>
+      )}
+    </div>
+  );
+});
 
-// Définition des types de props attendues
+CustomTooltip.displayName = "CustomTooltip";
+
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
   payload: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.number,
-    }),
+    })
   ),
-  //ajout d'une prop pour indiquer le mode d'affichage
   isSingleValue: PropTypes.bool,
-}
+};
 
-export default CustomTooltip
+export default CustomTooltip;

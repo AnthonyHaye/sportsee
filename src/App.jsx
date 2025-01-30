@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 import {
   HashRouter as Router,
   Routes,
@@ -40,6 +40,7 @@ import Page404 from './pages/Page404'
 import KeyInfoCard from './components/KeyInfoCard/KeyInfoCard'
 import ScoreChart from './components/ScoreChart/ScoreChart'
 import SessionChart from './components/SessionChart/SessionChart'
+import Spinner from './components/Spinner/Spinner'
 
 const Dashboard = () => {
   const { userId } = useParams()
@@ -49,80 +50,89 @@ const Dashboard = () => {
 
   // États pour les données
 
-  const [userData, setUserData] = useState(null)
-  const [userActivity, setUserActivity] = useState(null)
-  const [userAverageSessions, setUserAverageSessions] = useState(null)
-  const [userPerformance, setUserPerformance] = useState(null)
-  const [error, setError] = useState(null)
+  // const [userData, setUserData] = useState(null)
+  // const [userActivity, setUserActivity] = useState(null)
+  // const [userAverageSessions, setUserAverageSessions] = useState(null)
+  // const [userPerformance, setUserPerformance] = useState(null)
+  // const [error, setError] = useState(null)
+
+  const [userData, setUserData] = useState({
+    main: null,
+    activity: null,
+    sessions: null,
+    performance: null,
+    error: null
+  });
+  
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Récupération des données
-        const mainDataResponse = await fetchUserData(userIdNumber)
+        const [mainDataResponse, activityDataResponse, averageSessionDataResponse, performanceDataResponse] = await Promise.all([
+          fetchUserData(userIdNumber),
+          fetchUserActivity(userIdNumber),
+          fetchUserAverageSessions(userIdNumber),
+          fetchUserPerformance(userIdNumber),
+        ]);
 
-        const activityDataResponse = await fetchUserActivity(userIdNumber)
-        const averageSessionDataResponse =
-          await fetchUserAverageSessions(userIdNumber)
-        const performanceDataResponse = await fetchUserPerformance(userIdNumber)
-
-        // Standardisation des données
-        const standardizedUserData = standardizeUserData(mainDataResponse)
-        const standardizedActivityData =
-          standardizeActivityData(activityDataResponse)
-        const standardizedAverageSessionsData = standardizeAverageSessionsData(
+        console.log("Données reçues :", {
+          mainDataResponse,
+          activityDataResponse,
           averageSessionDataResponse,
-        )
-        const standardizedPerformanceData = standardizePerformanceData(
-          performanceDataResponse,
-        )
+          performanceDataResponse
+        });
 
-        // Mise à jour des états
-        setUserData(standardizedUserData)
-        setUserActivity(standardizedActivityData)
-        setUserAverageSessions(standardizedAverageSessionsData)
-        setUserPerformance(standardizedPerformanceData)
+       // Déclenche un délai avant d'afficher les données (simulation de chargement)
+       setTimeout(() => {
+        setUserData({
+          main: standardizeUserData(mainDataResponse),
+          activity: standardizeActivityData(activityDataResponse),
+          sessions: standardizeAverageSessionsData(averageSessionDataResponse),
+          performance: standardizePerformanceData(performanceDataResponse),
+          error: null
+        });
+        }, 2000); // ⏳ Affichage du spinner pendant 2 secondes
       } catch (error) {
-        console.error('Erreur lors du chargement des données :', error)
-        setError(
-          'Erreur lors du chargement des données, veuillez réessayer plus tard.',
-        )
+      console.error('Erreur lors du chargement des données :', error);
+      if (error.response) {
+        console.error("Détails de l'erreur API :", error.response.data);
+        }
+      
+      // Ajouter un délai aussi en cas d'erreur pour éviter un changement trop brutal
+      setTimeout(() => {
+        setUserData(prev => ({ ...prev, error: "Erreur lors du chargement des données, veuillez réessayer plus tard." }));
+        }, 2000); // 2 secondes aussi pour la cohérence
       }
-    }
+  };
+  fetchData();
+}, [userIdNumber]);
 
-    fetchData()
-  }, [userIdNumber])
+  const radarUserPerformance = useMemo(() => {
+    if (!userData.performance || !userData.performance.data) return [];
+    return userData.performance.data.map(({ subject, value }) => ({ subject, value }));
+  }, [userData.performance]);
+
+  const isLoading = !userData.main || !userData.activity || !userData.sessions || !userData.performance;
+
+if (isLoading) {
+  return <Spinner />;
+}
+  
+  
 
   // Affichage d'un message d'erreur si nécessaire
-  if (error) {
-    return <Page404 errorMsg={error} />
-  } else if (
-    !userData ||
-    !userActivity ||
-    !userAverageSessions ||
-    !userPerformance
+  if (userData.error && userData.error !== null) {
+    return <Page404 errorMsg={userData.error} />
+  } 
+  if (
+    !userData.main ||
+    !userData.activity ||
+    !userData.sessions ||
+    !userData.performance
   ) {
-    return <Page404 />
-  }
-
-  // Affichage d'un état de chargement si les données ne sont pas encore prêtes
-  if (!userActivity || !userData || !userAverageSessions || !userPerformance) {
-    console.log('Données non prêtes :', {
-      userActivity,
-      userData,
-      userAverageSessions,
-      userPerformance,
-    })
     return <div>Chargement des données...</div>
-  }
-
-  //doc recharts subject et value pour le radar graph
-  //obtenir le label correspondant (compatibles avec Recharts)
-
-  const radarUserPerformance = userPerformance.data.map((item) => ({
-    subject: item.subject,
-    value: item.value,
-  }))
+  }     
 
   if (!radarUserPerformance || radarUserPerformance.length === 0) {
     console.warn('Aucune donnée pour le graphique radar')
@@ -133,10 +143,11 @@ const Dashboard = () => {
   const score_data = [
     {
       name: 'Score',
-      uv: userData.todayScore * 100,
+      uv: (userData.main?.todayScore || userData.main?.score || 0) * 100,
       fill: '#ff0101',
     },
   ]
+  
 
   return (
     <>
@@ -147,47 +158,51 @@ const Dashboard = () => {
           <h1>
             Bonjour{' '}
             <span className="user_first_name">
-              {userData.userInfos.firstName}
+              {userData.main?.userInfos?.firstName}
             </span>
           </h1>
           <p>Félicitations ! Vous avez explosé vos objectifs d&apos;hier 👏 </p>
         </div>
-        <Activitychart userActivitySessions={userActivity.sessions} />
+        <Activitychart userActivitySessions={userData.activity?.sessions} />
         <ScoreChart scoreData={score_data} />
         <PerformanceChart radarUserPerformance={radarUserPerformance} />
-        <SessionChart AverageSessions={userAverageSessions.sessions} />
+        <SessionChart AverageSessions={userData.sessions?.sessions} />
 
         <div className="user_nutrition">
           <KeyInfoCard
+            key="calories"
             icon={<FaFire />}
             iconColor="#FF0000"
             backgroundColor="#FF00000D"
             name="Calories"
-            value={userData.keyData.calorieCount}
+            value={userData.main?.keyData?.calorieCount ?? 0}
             unit="kCal"
           />
           <KeyInfoCard
+            key="Proteins"
             icon={<FaDrumstickBite />}
             iconColor="#4AB8FF"
             backgroundColor="#4AB8FF1A"
             name="Protéïnes"
-            value={userData.keyData.proteinCount}
+            value={userData.main?.keyData?.proteinCount ?? 0}
             unit="g"
           />
           <KeyInfoCard
+            key="glucides"
             icon={<FaAppleAlt />}
             iconColor="#F9CE23"
             backgroundColor="#F9CE231A"
             name="Glucides"
-            value={userData.keyData.carbohydrateCount}
+            value={userData.main?.keyData?.carbohydrateCount ?? 0}
             unit="g"
           />
           <KeyInfoCard
+            key="lipides"
             icon={<FaHamburger />}
             iconColor="#FD5181"
             backgroundColor="#FD51811A"
             name="Lipides"
-            value={userData.keyData.lipidCount}
+            value={userData.main?.keyData?.lipidCount ?? 0}
             unit="g"
           />
         </div>

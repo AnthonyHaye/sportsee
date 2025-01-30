@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import CustomTooltip from '../CustomTooltip/CustomTooltip'
 import './Activitychart.scss'
+import { useMemo } from 'react'
 
 /**
  * Un composant de diagramme à barres qui affiche l'activité quotidienne de l'utilisateur.
@@ -27,9 +28,10 @@ import './Activitychart.scss'
  */
 const Activitychart = ({ userActivitySessions }) => {
   //calcul des limites pour l'axe Y (poids)
-  const minWeight =
-    Math.min(...userActivitySessions.map((session) => session.kilogram)) - 1
-  const maxWeight = minWeight + 7
+const [minWeight, maxWeight] = useMemo(() => {
+  const weights = userActivitySessions.map((s) => s.kilogram);
+  return [Math.min(...weights) - 1, Math.max(...weights) + 1];
+}, [userActivitySessions]);
 
   //générer les valeurs des ticks pour l'axe Y des poids (un trait tous les kg)
   //nvl instance = définir la longueur de tableau
@@ -38,10 +40,10 @@ const Activitychart = ({ userActivitySessions }) => {
   //_ élément actuel du tableau, i = index de l'élement
   //chaque élement sera calculé en ajoutant l'index à min weight
   //70 +0, 70+1,  70+2 etc...=> ticks pr le Y axis
-  const weightTicks = Array.from(
-    { length: maxWeight - minWeight + 1 },
-    (_, i) => minWeight + i,
-  )
+  const weightTicks = useMemo(
+    () => Array.from({ length: maxWeight - minWeight + 1 }, (_, i) => minWeight + i),
+    [minWeight, maxWeight]
+  );
 
   return (
     <div className="user_daily_activity">

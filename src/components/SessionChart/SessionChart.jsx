@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import { useState } from 'react'
+import React, { useMemo, useCallback, useState } from 'react';
 
 //recharts components
 import {
@@ -25,36 +25,36 @@ import CustomTooltip from '../CustomTooltip/CustomTooltip'
  * @returns {JSX.Element} Le composant de graphique en ligne rendu.
  */
 
-const SessionChart = ({ AverageSessions }) => {
-  const [hoverIndex, setHoverIndex] = useState(-1)
+const SessionChart = React.memo(({ AverageSessions = [] }) => {
+  
 
-  const handleMouseMove = (state) => {
+  const [hoverIndex, setHoverIndex] = useState(-1);
+
+  const handleMouseMove = useCallback((state) => {
     if (state.isTooltipActive) {
-      const { activeTooltipIndex } = state
-      setHoverIndex(activeTooltipIndex)
+      setHoverIndex(state.activeTooltipIndex);
     } else {
-      setHoverIndex(-1)
+      setHoverIndex(-1);
     }
-  }
+  }, []);
 
-  const calculateBackground = () => {
-    const totalDays = AverageSessions.length
-    //Largeur total du conteneur en pourcentage
-    const totalwidth = 100
-    const hoverPosition = ((hoverIndex + 0.5) / totalDays) * totalwidth
-    //ajuste le décalage en ajoutant ou en soustrayant une petite valeur
-    const adjustedHoverPosition = Math.min(
-      Math.max(hoverPosition, 0),
-      totalwidth,
-    )
-    return `linear-gradient(to right, #FF0000 ${adjustedHoverPosition}%, #8B0000 ${adjustedHoverPosition}%)`
-  }
+  const calculateBackground = useMemo(() => {
+    const totalDays = AverageSessions.length;
+    const totalwidth = 100;
+    const hoverPosition = ((hoverIndex + 0.5) / totalDays) * totalwidth;
+    return `linear-gradient(to right, #FF0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%, #8B0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%)`;
+  }, [hoverIndex, AverageSessions.length]);
 
-  //détermine les valeurs min et max pour la durée des sessions
-  const minSessionLenght =
-    Math.min(...AverageSessions.map((session) => session.sessionLength)) - 10
-  const maxSessionLenght =
-    Math.max(...AverageSessions.map((session) => session.sessionLength)) + 20
+  const [minSessionLength, maxSessionLength] = useMemo(() => {
+    return [
+      Math.min(...AverageSessions.map((session) => session.sessionLength)) - 10,
+      Math.max(...AverageSessions.map((session) => session.sessionLength)) + 20,
+    ];
+  }, [AverageSessions]);
+
+  if (!AverageSessions || AverageSessions.length === 0) {
+    return <div className="user_sessions_length">Aucune donnée disponible.</div>;
+  }
 
   return (
     <div
@@ -70,12 +70,7 @@ const SessionChart = ({ AverageSessions }) => {
       <ResponsiveContainer width="100%" height="100%">
         <LineChart
           data={AverageSessions}
-          margin={{
-            top: 0,
-            right: 0,
-            left: 0,
-            bottom: 0,
-          }}
+          margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setHoverIndex(-1)}
         >
@@ -83,37 +78,20 @@ const SessionChart = ({ AverageSessions }) => {
             dataKey="day"
             axisLine={false}
             tickLine={false}
-            tickFormatter={(tick) =>
-              ['L', 'M', 'M', 'J', 'V', 'S', 'D'][tick - 1]
-            }
+            tickFormatter={(tick) => ['L', 'M', 'M', 'J', 'V', 'S', 'D'][tick - 1]}
             tick={{ fill: '#ffffff99', fontSize: 12 }}
             padding={{ left: 5, right: 5 }}
           />
-          <YAxis
-            domain={[minSessionLenght, maxSessionLenght]} //
-            axisLine={false}
-            tickLine={false}
-            tick={{ fill: '#ffffff99', fontSize: 12 }}
-            hide={true}
-          />
-          <Tooltip
-            content={<CustomTooltip isSingleValue={true} />}
-            cursor={{ stroke: 'transparent' }}
-          />
-
-          <Line
-            type="monotone"
-            dataKey="sessionLength"
-            stroke="#FFFFFF"
-            strokeWidth={2}
-            dot={false}
-            activeDot={{ r: 4 }}
-          />
+          <YAxis domain={[minSessionLength, maxSessionLength]} axisLine={false} tickLine={false} tick={{ fill: '#ffffff99', fontSize: 12 }} hide={true} />
+          <Tooltip content={<CustomTooltip isSingleValue={true} />} cursor={{ stroke: 'transparent' }} />
+          <Line type="monotone" dataKey="sessionLength" stroke="#FFFFFF" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
-  )
-}
+  );
+});
+
+SessionChart.displayName = "SessionChart";
 
 SessionChart.propTypes = {
   AverageSessions: PropTypes.arrayOf(

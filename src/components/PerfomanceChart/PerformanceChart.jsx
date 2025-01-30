@@ -1,3 +1,4 @@
+import React from 'react';
 import PropTypes from 'prop-types'
 import {
   ResponsiveContainer,
@@ -20,7 +21,11 @@ import './PerformanceChart.scss'
  * @returns {JSX.Element} Le composant de graphique radar rendu.
  */
 
-const PerformanceChart = ({ radarUserPerformance }) => {
+const PerformanceChart = React.memo(({ radarUserPerformance = []  }) => {
+  if (!radarUserPerformance || radarUserPerformance.length === 0) {
+    return <div className="user_radar_graph">Aucune donnée disponible.</div>;
+  }
+
   return (
     <div className="user_radar_graph">
       <ResponsiveContainer width="100%" height="100%">
@@ -35,12 +40,14 @@ const PerformanceChart = ({ radarUserPerformance }) => {
             dataKey="subject"
             tick={{ fill: '#ffffff', fontSize: 10 }}
           />
-          <Radar name="Mike" dataKey="value" fill="#ff0101b3" />
+          <Radar name="User" dataKey="value" fill="#ff0101b3" />
         </RadarChart>
       </ResponsiveContainer>
     </div>
-  )
-}
+  );
+});
+
+PerformanceChart.displayName = "PerformanceChart";
 
 PerformanceChart.propTypes = {
   radarUserPerformance: PropTypes.arrayOf(

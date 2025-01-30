@@ -6,17 +6,19 @@
   top: 80px;
   z-index: 5;
   height: calc(100vh - 80px);
-  width: 7vw;
+  width: clamp(80px, 7vw, 120px); 
   background-color: v.$color-bgnav;
   display: flex;
   align-items: center;
   padding: 1.5rem;
+
   .left_nav_links {
     display: flex;
     color: v.$text-light;
     justify-content: center;
     align-items: center;
     width: 100%;
+
     ul {
       display: flex;
       flex-direction: column;
@@ -24,11 +26,19 @@
       justify-content: center;
       padding-inline-start: 0;
       margin: 0;
+      list-style: none;
+
       li {
-        list-style-type: none;
         margin-bottom: 2rem;
+        transition: transform 0.2s ease-in-out;
+
+        &:hover {
+          transform: scale(1.1);
+        }
+
         .icon_tab {
           border-radius: 10px;
+
           svg {
             padding: 1rem;
             font-size: 5rem;
@@ -38,3 +48,4 @@
     }
   }
 }
+

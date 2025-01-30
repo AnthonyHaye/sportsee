@@ -35,9 +35,9 @@
     }
   }
   .daily_activity_barchart {
-    flex: 1;
+    flex-grow: 1;
     .custom-tooltip {
-      background-color: v.$color-primary;
+      background-color: rgba(v.$color-primary, 0.9);
       padding: 10px;
       color: v.$text-light;
       position: relative;
