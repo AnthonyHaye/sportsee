@@ -82,6 +82,10 @@ const Dashboard = () => {
           averageSessionDataResponse,
           performanceDataResponse
         });
+        
+        if (!mainDataResponse || !activityDataResponse || !averageSessionDataResponse || !performanceDataResponse) {
+          throw new Error("Les données reçues sont invalides ou vides.");
+        }
 
        // Déclenche un délai avant d'afficher les données (simulation de chargement)
        setTimeout(() => {
@@ -113,7 +117,7 @@ const Dashboard = () => {
     return userData.performance.data.map(({ subject, value }) => ({ subject, value }));
   }, [userData.performance]);
 
-  const isLoading = !userData.main || !userData.activity || !userData.sessions || !userData.performance;
+const isLoading = !userData.main || !userData.activity || !userData.sessions || !userData.performance;
 
 if (isLoading) {
   return <Spinner />;
