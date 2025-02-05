@@ -20,7 +20,7 @@ import './ScoreChart.scss'
 
 const ScoreRadialBarchart = React.memo(({ scoreData = [] }) => {
   if (scoreData.length === 0) {
-    return <div className="user_score">Aucune donnée disponible.</div>;
+    return <div className="user_score">Aucune donnée disponible.</div>
   }
 
   return (
@@ -73,10 +73,10 @@ const ScoreRadialBarchart = React.memo(({ scoreData = [] }) => {
         </RadialBarChart>
       </ResponsiveContainer>
     </div>
-  );
-});
+  )
+})
 
-ScoreRadialBarchart.displayName = "ScoreRadialBarchart";
+ScoreRadialBarchart.displayName = 'ScoreRadialBarchart'
 
 ScoreRadialBarchart.propTypes = {
   scoreData: PropTypes.arrayOf(

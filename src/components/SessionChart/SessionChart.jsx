@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React, { useMemo, useCallback, useState } from 'react';
+import React, { useMemo, useCallback, useState } from 'react'
 
 //recharts components
 import {
@@ -26,34 +26,32 @@ import CustomTooltip from '../CustomTooltip/CustomTooltip'
  */
 
 const SessionChart = React.memo(({ AverageSessions = [] }) => {
-  
-
-  const [hoverIndex, setHoverIndex] = useState(-1);
+  const [hoverIndex, setHoverIndex] = useState(-1)
 
   const handleMouseMove = useCallback((state) => {
     if (state.isTooltipActive) {
-      setHoverIndex(state.activeTooltipIndex);
+      setHoverIndex(state.activeTooltipIndex)
     } else {
-      setHoverIndex(-1);
+      setHoverIndex(-1)
     }
-  }, []);
+  }, [])
 
   const calculateBackground = useMemo(() => {
-    const totalDays = AverageSessions.length;
-    const totalwidth = 100;
-    const hoverPosition = ((hoverIndex + 0.5) / totalDays) * totalwidth;
-    return `linear-gradient(to right, #FF0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%, #8B0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%)`;
-  }, [hoverIndex, AverageSessions.length]);
+    const totalDays = AverageSessions.length
+    const totalwidth = 100
+    const hoverPosition = ((hoverIndex + 0.5) / totalDays) * totalwidth
+    return `linear-gradient(to right, #FF0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%, #8B0000 ${Math.min(Math.max(hoverPosition, 0), totalwidth)}%)`
+  }, [hoverIndex, AverageSessions.length])
 
   const [minSessionLength, maxSessionLength] = useMemo(() => {
     return [
       Math.min(...AverageSessions.map((session) => session.sessionLength)) - 10,
       Math.max(...AverageSessions.map((session) => session.sessionLength)) + 20,
-    ];
-  }, [AverageSessions]);
+    ]
+  }, [AverageSessions])
 
   if (!AverageSessions || AverageSessions.length === 0) {
-    return <div className="user_sessions_length">Aucune donnée disponible.</div>;
+    return <div className="user_sessions_length">Aucune donnée disponible.</div>
   }
 
   return (
@@ -62,7 +60,7 @@ const SessionChart = React.memo(({ AverageSessions = [] }) => {
       style={{
         position: 'relative',
         overflow: 'hidden',
-        background: hoverIndex >= 0 ? calculateBackground() : '#ff0101',
+        background: hoverIndex >= 0 ? calculateBackground : '#ff0101',
         transition: 'background 0.3s ease',
       }}
     >
@@ -78,20 +76,38 @@ const SessionChart = React.memo(({ AverageSessions = [] }) => {
             dataKey="day"
             axisLine={false}
             tickLine={false}
-            tickFormatter={(tick) => ['L', 'M', 'M', 'J', 'V', 'S', 'D'][tick - 1]}
+            tickFormatter={(tick) =>
+              ['L', 'M', 'M', 'J', 'V', 'S', 'D'][tick - 1]
+            }
             tick={{ fill: '#ffffff99', fontSize: 12 }}
             padding={{ left: 5, right: 5 }}
           />
-          <YAxis domain={[minSessionLength, maxSessionLength]} axisLine={false} tickLine={false} tick={{ fill: '#ffffff99', fontSize: 12 }} hide={true} />
-          <Tooltip content={<CustomTooltip isSingleValue={true} />} cursor={{ stroke: 'transparent' }} />
-          <Line type="monotone" dataKey="sessionLength" stroke="#FFFFFF" strokeWidth={2} dot={false} activeDot={{ r: 4 }} />
+          <YAxis
+            domain={[minSessionLength, maxSessionLength]}
+            axisLine={false}
+            tickLine={false}
+            tick={{ fill: '#ffffff99', fontSize: 12 }}
+            hide={true}
+          />
+          <Tooltip
+            content={<CustomTooltip isSingleValue={true} />}
+            cursor={{ stroke: 'transparent' }}
+          />
+          <Line
+            type="monotone"
+            dataKey="sessionLength"
+            stroke="#FFFFFF"
+            strokeWidth={2}
+            dot={false}
+            activeDot={{ r: 4 }}
+          />
         </LineChart>
       </ResponsiveContainer>
     </div>
-  );
-});
+  )
+})
 
-SessionChart.displayName = "SessionChart";
+SessionChart.displayName = 'SessionChart'
 
 SessionChart.propTypes = {
   AverageSessions: PropTypes.arrayOf(

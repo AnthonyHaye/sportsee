@@ -12,11 +12,11 @@ import '../LeftNav/Leftnav.scss'
  * @returns {React.Element} Le composant LeftNav.
  */
 const navIcons = [
-  { component: <GiMeditation />, color: "#ff0101" },
-  { component: <BiSwim />, color: "#ff0101" },
-  { component: <MdDirectionsBike />, color: "#ff0101" },
-  { component: <LuDumbbell />, color: "#ff0101" },
-];
+  { component: <GiMeditation />, color: '#ff0101' },
+  { component: <BiSwim />, color: '#ff0101' },
+  { component: <MdDirectionsBike />, color: '#ff0101' },
+  { component: <LuDumbbell />, color: '#ff0101' },
+]
 
 const LeftNav = React.memo(() => {
   return (
@@ -35,9 +35,9 @@ const LeftNav = React.memo(() => {
         </ul>
       </div>
     </nav>
-  );
-});
+  )
+})
 
-LeftNav.displayName = "LeftNav";
+LeftNav.displayName = 'LeftNav'
 
-export default LeftNav;
+export default LeftNav

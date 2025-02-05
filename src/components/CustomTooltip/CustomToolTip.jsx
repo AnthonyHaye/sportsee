@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types'
-import React from 'react';
+import React from 'react'
 
 /**
  * Composant Tooltip personnalisé pour afficher des informations sur les graphiques.
@@ -13,7 +13,7 @@ import React from 'react';
  * @returns {JSX.Element|null} - Retourne le JSX pour le tooltip ou null si non actif.
  */
 const CustomTooltip = React.memo(({ active, payload, isSingleValue }) => {
-  if (!active || !payload?.length) return null;
+  if (!active || !payload?.length) return null
 
   return (
     <div className="custom-tooltip">
@@ -26,19 +26,19 @@ const CustomTooltip = React.memo(({ active, payload, isSingleValue }) => {
         </>
       )}
     </div>
-  );
-});
+  )
+})
 
-CustomTooltip.displayName = "CustomTooltip";
+CustomTooltip.displayName = 'CustomTooltip'
 
 CustomTooltip.propTypes = {
   active: PropTypes.bool,
   payload: PropTypes.arrayOf(
     PropTypes.shape({
       value: PropTypes.number,
-    })
+    }),
   ),
   isSingleValue: PropTypes.bool,
-};
+}
 
-export default CustomTooltip;
+export default CustomTooltip

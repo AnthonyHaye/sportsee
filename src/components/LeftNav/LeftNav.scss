@@ -6,7 +6,7 @@
   top: 80px;
   z-index: 5;
   height: calc(100vh - 80px);
-  width: clamp(80px, 7vw, 120px); 
+  width: clamp(80px, 7vw, 120px);
   background-color: v.$color-bgnav;
   display: flex;
   align-items: center;
@@ -48,4 +48,3 @@
     }
   }
 }
-

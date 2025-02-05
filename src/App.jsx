@@ -61,74 +61,94 @@ const Dashboard = () => {
     activity: null,
     sessions: null,
     performance: null,
-    error: null
-  });
-  
+    error: null,
+  })
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Récupération des données
-        const [mainDataResponse, activityDataResponse, averageSessionDataResponse, performanceDataResponse] = await Promise.all([
+        const [
+          mainDataResponse,
+          activityDataResponse,
+          averageSessionDataResponse,
+          performanceDataResponse,
+        ] = await Promise.all([
           fetchUserData(userIdNumber),
           fetchUserActivity(userIdNumber),
           fetchUserAverageSessions(userIdNumber),
           fetchUserPerformance(userIdNumber),
-        ]);
+        ])
 
-        console.log("Données reçues :", {
+        console.log('Données reçues :', {
           mainDataResponse,
           activityDataResponse,
           averageSessionDataResponse,
-          performanceDataResponse
-        });
-        
-        if (!mainDataResponse || !activityDataResponse || !averageSessionDataResponse || !performanceDataResponse) {
-          throw new Error("Les données reçues sont invalides ou vides.");
+          performanceDataResponse,
+        })
+
+        if (
+          !mainDataResponse ||
+          !activityDataResponse ||
+          !averageSessionDataResponse ||
+          !performanceDataResponse
+        ) {
+          throw new Error('Les données reçues sont invalides ou vides.')
         }
 
-       // Déclenche un délai avant d'afficher les données (simulation de chargement)
-       setTimeout(() => {
-        setUserData({
-          main: standardizeUserData(mainDataResponse),
-          activity: standardizeActivityData(activityDataResponse),
-          sessions: standardizeAverageSessionsData(averageSessionDataResponse),
-          performance: standardizePerformanceData(performanceDataResponse),
-          error: null
-        });
-        }, 2000); // ⏳ Affichage du spinner pendant 2 secondes
+        // Déclenche un délai avant d'afficher les données (simulation de chargement)
+        setTimeout(() => {
+          setUserData({
+            main: standardizeUserData(mainDataResponse),
+            activity: standardizeActivityData(activityDataResponse),
+            sessions: standardizeAverageSessionsData(
+              averageSessionDataResponse,
+            ),
+            performance: standardizePerformanceData(performanceDataResponse),
+            error: null,
+          })
+        }, 2000) // ⏳ Affichage du spinner pendant 2 secondes
       } catch (error) {
-      console.error('Erreur lors du chargement des données :', error);
-      if (error.response) {
-        console.error("Détails de l'erreur API :", error.response.data);
+        console.error('Erreur lors du chargement des données :', error)
+        if (error.response) {
+          console.error("Détails de l'erreur API :", error.response.data)
         }
-      
-      // Ajouter un délai aussi en cas d'erreur pour éviter un changement trop brutal
-      setTimeout(() => {
-        setUserData(prev => ({ ...prev, error: "Erreur lors du chargement des données, veuillez réessayer plus tard." }));
-        }, 2000); // 2 secondes aussi pour la cohérence
+
+        // Ajouter un délai aussi en cas d'erreur pour éviter un changement trop brutal
+        setTimeout(() => {
+          setUserData((prev) => ({
+            ...prev,
+            error:
+              'Erreur lors du chargement des données, veuillez réessayer plus tard.',
+          }))
+        }, 2000) // 2 secondes aussi pour la cohérence
       }
-  };
-  fetchData();
-}, [userIdNumber]);
+    }
+    fetchData()
+  }, [userIdNumber])
 
   const radarUserPerformance = useMemo(() => {
-    if (!userData.performance || !userData.performance.data) return [];
-    return userData.performance.data.map(({ subject, value }) => ({ subject, value }));
-  }, [userData.performance]);
+    if (!userData.performance || !userData.performance.data) return []
+    return userData.performance.data.map(({ subject, value }) => ({
+      subject,
+      value,
+    }))
+  }, [userData.performance])
 
-const isLoading = !userData.main || !userData.activity || !userData.sessions || !userData.performance;
+  const isLoading =
+    !userData.main ||
+    !userData.activity ||
+    !userData.sessions ||
+    !userData.performance
 
-if (isLoading) {
-  return <Spinner />;
-}
-  
-  
+  if (isLoading) {
+    return <Spinner />
+  }
 
   // Affichage d'un message d'erreur si nécessaire
   if (userData.error && userData.error !== null) {
     return <Page404 errorMsg={userData.error} />
-  } 
+  }
   if (
     !userData.main ||
     !userData.activity ||
@@ -136,7 +156,7 @@ if (isLoading) {
     !userData.performance
   ) {
     return <div>Chargement des données...</div>
-  }     
+  }
 
   if (!radarUserPerformance || radarUserPerformance.length === 0) {
     console.warn('Aucune donnée pour le graphique radar')
@@ -151,7 +171,6 @@ if (isLoading) {
       fill: '#ff0101',
     },
   ]
-  
 
   return (
     <>

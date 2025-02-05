@@ -8,6 +8,7 @@
   // padding: 5px;
   position: relative;
   flex: 1;
+  
   h3 {
     @include m.title(1.2rem);
     position: absolute;

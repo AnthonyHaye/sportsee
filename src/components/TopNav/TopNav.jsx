@@ -1,4 +1,4 @@
-import React from 'react';
+import React from 'react'
 import logo from '../../assets/sportsee_logo.svg'
 import './TopNav.scss'
 
@@ -8,7 +8,7 @@ import './TopNav.scss'
  * @returns {React.Element} Le composant TopNav.
  */
 
-const navLinks = ["Accueil", "Profil", "Réglage", "Communauté"];
+const navLinks = ['Accueil', 'Profil', 'Réglage', 'Communauté']
 
 const TopNav = React.memo(() => {
   return (
@@ -22,9 +22,9 @@ const TopNav = React.memo(() => {
         </ul>
       </div>
     </nav>
-  );
-});
+  )
+})
 
-TopNav.displayName = "TopNav";
+TopNav.displayName = 'TopNav'
 
 export default TopNav

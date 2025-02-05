@@ -57,7 +57,7 @@ export const fetchUserData = async (userId) => {
   } catch (error) {
     console.error(
       '❌ Erreur lors de la récupération des données utilisateur :',
-      error
+      error,
     )
     throw error
   }

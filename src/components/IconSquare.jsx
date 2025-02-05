@@ -14,10 +14,12 @@ import PropTypes from 'prop-types'
 const IconSquare = ({ icon, iconColor, backgroundColor }) => {
   return (
     <div className="icon_tab" style={{ backgroundColor }}>
-      {React.isValidElement(icon) ? React.cloneElement(icon, { color: iconColor }) : null}
+      {React.isValidElement(icon)
+        ? React.cloneElement(icon, { color: iconColor })
+        : null}
     </div>
-  );
-};
+  )
+}
 
 IconSquare.propTypes = {
   icon: PropTypes.node.isRequired,
